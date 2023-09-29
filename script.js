@@ -1,23 +1,35 @@
-//your code here
-const divs = document.querySelectorAll(".image")
+const images = document.querySelectorAll(".image");
+const flex = document.querySelector(".flex");
 
-divs.forEach(div=>{
-	div.addEventListener('dragstart',(e)=>{
-		e.dataTransfer.setData('id', e.target.id)
-	})
-}) 
-divs.forEach(div=>{
-	div.addEventListener('dragover',(e)=>{
-		e.preventDefault()
-	})
-	div.addEventListener('drop',(e)=>{
-		const drag = document.getElementById(e.dataTransfer.getData('id'))
-	    let tid = drag.id
-		drag.id = div.id
-		div.id = tid
-		let temp = div.innerText
-		div.innerText  = drag.innerText
-		drag.innerText = temp
-		console.log(div.innerText, drag.innerText, temp)
-	})
-})
+flex.addEventListener('dragstart',dragStart);
+flex.addEventListener('dragend',dragEnd);
+
+for(const image of images){
+    image.addEventListener('dragover', dragOver);
+    image.addEventListener('dragenter', dragEnter);
+    image.addEventListener('dragleave', dragLeave);
+    image.addEventListener('drop', dragDrop);
+}
+
+function dragDrop(){
+    this.className = 'image';
+    this.append(image);
+}
+function dragLeave(){
+   this.className = 'image';
+}
+function dragEnter(e){
+    e.preventDefault();
+    this.className += 'selected'
+
+}
+function dragOver(e){
+    e.preventDefault();
+}
+function dragEnd(){
+    this.className = 'image'
+}
+function dragStart(){
+    this.className += 'selected';
+    setTimeout(()=> this.className = 'invisible', 0);
+}
