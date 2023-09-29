@@ -53,6 +53,9 @@ div.container {
 .selected {
   border: 5px solid rgb(0, 195, 255);
 }
+.hide {
+	display : none;
+}
 
 p {
   text-align: center;
@@ -60,8 +63,4 @@ p {
 
 button {
   margin: 20px;
-}
-
-.dragging{
-  opacity: 1;
 }
