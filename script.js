@@ -1,35 +1,31 @@
-const images = document.querySelectorAll(".image");
-const flex = document.querySelector(".flex");
+//your code here
+const parent = document.querySelector('#parent');
+const images = document.querySelectorAll('.image');
+console.log(parent , images)
+images.forEach(image =>{
+    console.log(image)
+    image.addEventListener('dragstart', ()=>{
+        image.classList.add('dragging');
+    })
 
-flex.addEventListener('dragstart',dragStart);
-flex.addEventListener('dragend',dragEnd);
+    image.addEventListener("dragend", ()=>{
+        image.classList.remove('dragging');
+    })
+})
 
-for(const image of images){
-    image.addEventListener('dragover', dragOver);
-    image.addEventListener('dragenter', dragEnter);
-    image.addEventListener('dragleave', dragLeave);
-    image.addEventListener('drop', dragDrop);
-}
-
-function dragDrop(){
-    this.className = 'image';
-    this.append(image);
-}
-function dragLeave(){
-   this.className = 'image';
-}
-function dragEnter(e){
+const rearrangeImage = (e) => {
     e.preventDefault();
-    this.className += 'selected'
+    const currentDraggingElement = document.querySelector(".dragging");
+    const siblings = [...document.querySelectorAll('.image:not(.dragging)')]
+    // console.log(currentDraggingElement , siblings)
+    const nextSibling = siblings.find(sibling => {
+        // console.log(e.clientX , sibling.offsetLeft + (sibling.offsetWidth/2))
+        return e.clientX <= (sibling.offsetLeft )
+    })
+    // console.log(nextSibling);
+    parent.insertBefore(currentDraggingElement , nextSibling)
+    
+}
 
-}
-function dragOver(e){
-    e.preventDefault();
-}
-function dragEnd(){
-    this.className = 'image'
-}
-function dragStart(){
-    this.className += 'selected';
-    setTimeout(()=> this.className = 'invisible', 0);
-}
+parent.addEventListener('dragover', rearrangeImage);
+parent.addEventListener('dragenter', e =>  e.preventDefault())
